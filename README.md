@@ -15,6 +15,19 @@ This repository presents a structured review of the main ensemble strategies: **
 
 The document emphasizes practical applications in customer analytics, marketing, recommendation systems, demand forecasting, fraud detection, and predictive modeling. Every concept is supported by peer-reviewed scientific literature, seminal research papers, or official technical documentation.
 
+# Table of Contents
+
+1. Introduction
+2. What is an Ensemble Model?
+3. What is the Difference Between Bagging and Boosting?
+4. What is Stacking?
+5. Why Do Ensemble Models Generalize Better?
+6. Ensemble Algorithms
+7. Comparison of Ensemble Algorithms
+8. Real-World Applications
+9. Conclusion
+10. References
+
 # Introduction
 
 Machine Learning has become one of the most influential fields of Artificial Intelligence, enabling computers to identify patterns, learn from historical data, and make predictions across a wide range of applications. Among the different approaches available, **ensemble models** have emerged as one of the most successful techniques for improving predictive performance in supervised learning tasks.
@@ -161,6 +174,10 @@ Stacking improves generalization by combining models with different learning beh
 
 As a result, ensemble methods often outperform individual models in terms of predictive accuracy, robustness, and stability, making them the preferred choice for many real-world supervised Machine Learning applications.
 
+# 5. Ensemble Algorithms
+
+Ensemble learning includes several algorithms that differ in the way they generate and combine multiple predictive models. This section reviews the most widely used ensemble algorithms, explaining their mechanisms, advantages, and common applications.
+
 ## 5.1 AdaBoost (Adaptive Boosting)
 
 AdaBoost, short for **Adaptive Boosting**, was one of the first successful boosting algorithms and was introduced by Yoav Freund and Robert Schapire in 1997. It builds a strong classifier by sequentially combining multiple weak learners, typically shallow decision trees known as decision stumps.
@@ -234,3 +251,258 @@ XGBoost extends traditional Gradient Boosting by incorporating regularization te
 - Recommendation systems.
 - Demand forecasting.
 - Marketing analytics.
+
+## 5.4 LightGBM (Light Gradient Boosting Machine)
+
+LightGBM is a gradient boosting framework developed by Microsoft that is specifically designed for efficiency and scalability. It uses histogram-based learning and a leaf-wise tree growth strategy, allowing it to train significantly faster than traditional Gradient Boosting algorithms while maintaining high predictive accuracy.
+
+### Mechanism
+
+Unlike many boosting algorithms that grow trees level by level, LightGBM expands the leaf that maximizes the reduction of the loss function. It also discretizes continuous features into histograms, reducing memory usage and accelerating training without substantially affecting performance.
+
+### Advantages
+
+- Very fast training and prediction.
+- Low memory consumption.
+- Excellent performance on large datasets.
+- Supports parallel and distributed learning.
+- Handles high-dimensional data efficiently.
+
+### Common Use Cases
+
+- Customer segmentation.
+- Click-through rate prediction.
+- Large-scale recommendation systems.
+- Sales forecasting.
+- Marketing analytics.
+
+---
+
+## 5.5 CatBoost (Categorical Boosting)
+
+CatBoost is a gradient boosting algorithm developed by Yandex that is specifically designed to handle categorical variables efficiently. Unlike many Machine Learning algorithms, CatBoost can process categorical features directly without requiring extensive preprocessing such as one-hot encoding.
+
+### Mechanism
+
+CatBoost applies ordered boosting and specialized encoding techniques to transform categorical variables while minimizing prediction shift and overfitting. This enables the algorithm to learn effectively from datasets containing numerous categorical features.
+
+### Advantages
+
+- Native support for categorical variables.
+- Minimal feature preprocessing.
+- Strong resistance to overfitting.
+- High predictive accuracy.
+- Easy to use with mixed numerical and categorical datasets.
+
+### Common Use Cases
+
+- Customer behavior prediction.
+- E-commerce recommendation systems.
+- Credit risk assessment.
+- Marketing response prediction.
+- Customer lifetime value estimation.
+
+---
+
+## 5.6 Voting Classifier
+
+A Voting Classifier is an ensemble method that combines the predictions of multiple independent classifiers. Rather than training models sequentially, it aggregates their predictions to produce a final decision.
+
+### Mechanism
+
+Each base classifier is trained independently using the same training dataset. During prediction, the outputs are combined using either:
+
+- **Hard Voting:** the class receiving the majority of votes is selected.
+- **Soft Voting:** predicted class probabilities are averaged, and the class with the highest average probability is selected.
+
+### Advantages
+
+- Simple to implement.
+- Improves prediction stability.
+- Reduces dependence on a single model.
+- Can combine completely different algorithms.
+- Often increases classification accuracy.
+
+### Common Use Cases
+
+- Medical diagnosis.
+- Fraud detection.
+- Email spam filtering.
+- Customer classification.
+- Credit approval.
+
+---
+
+## 5.7 Stacking Classifier
+
+A Stacking Classifier is the practical implementation of the stacking strategy for classification problems. It combines the predictions of multiple base classifiers using a meta-classifier that learns how to optimally integrate their outputs.
+
+### Mechanism
+
+Several different classifiers are first trained independently. Their predictions become the input features of a meta-classifier, which learns the best way to combine them to produce the final prediction.
+
+Unlike a Voting Classifier, where every model contributes equally or through predefined weights, the meta-classifier automatically learns the optimal combination from the training data.
+
+### Advantages
+
+- Often achieves state-of-the-art predictive performance.
+- Combines complementary strengths of multiple algorithms.
+- Highly flexible.
+- Can reduce both bias and variance.
+- Suitable for complex prediction problems.
+
+### Common Use Cases
+
+- Financial forecasting.
+- Medical diagnosis.
+- Customer churn prediction.
+- Recommendation systems.
+- Machine Learning competitions.
+
+# 6. Comparison of Ensemble Algorithms
+
+The following table summarizes the main characteristics of the ensemble algorithms discussed in this document. Although all of them improve predictive performance by combining multiple models, they differ in their learning strategies, strengths, and typical applications.
+
+| Algorithm | Ensemble Strategy | Main Strength | Main Limitation | Typical Applications |
+|------------|-------------------|---------------|-----------------|----------------------|
+| **AdaBoost** | Boosting | Simple and effective for improving weak learners | Sensitive to noisy data and outliers | Spam detection, customer churn, binary classification |
+| **Gradient Boosting** | Boosting | High predictive accuracy and flexible optimization | Slower training than more optimized implementations | Sales forecasting, financial prediction, insurance risk |
+| **XGBoost** | Boosting | Excellent accuracy, regularization, and scalability | Requires hyperparameter tuning | Fraud detection, credit scoring, recommendation systems, marketing analytics |
+| **LightGBM** | Boosting | Extremely fast training and low memory usage | May overfit on small datasets if not tuned properly | Large-scale analytics, click-through rate prediction, demand forecasting |
+| **CatBoost** | Boosting | Native handling of categorical variables | Longer training time than LightGBM for some datasets | Customer behavior prediction, e-commerce, marketing response |
+| **Voting Classifier** | Voting | Simple implementation and improved stability | Limited improvement when base models are highly correlated | Medical diagnosis, fraud detection, customer classification |
+| **Stacking Classifier** | Stacking | Combines different algorithms to maximize predictive performance | Higher computational complexity and risk of overfitting | Recommendation systems, customer churn, financial forecasting |
+
+## Key Differences
+
+Although all ensemble algorithms combine multiple models, they address predictive problems in different ways:
+
+- **AdaBoost** focuses on correcting misclassified observations by increasing their importance during training.
+- **Gradient Boosting** minimizes prediction errors by fitting each new model to the residuals of the current ensemble.
+- **XGBoost** extends Gradient Boosting with regularization, parallelization, and optimized tree construction, making it one of the most successful algorithms for structured data.
+- **LightGBM** prioritizes computational efficiency and scalability through histogram-based learning and leaf-wise tree growth.
+- **CatBoost** specializes in datasets containing categorical variables by processing them directly without extensive preprocessing.
+- **Voting Classifier** aggregates the predictions of multiple independent models through hard or soft voting.
+- **Stacking Classifier** learns how to combine the predictions of several models using a meta-classifier, often achieving the highest predictive performance among ensemble techniques.
+
+```mermaid
+flowchart TD
+    Ensemble[Ensemble Models]
+
+    Ensemble --> Bagging
+    Ensemble --> Boosting
+    Ensemble --> Voting
+    Ensemble --> Stacking
+
+    Bagging --> RandomForest[Random Forest]
+
+    Boosting --> AdaBoost
+    Boosting --> GradientBoosting[Gradient Boosting]
+    Boosting --> XGBoost
+    Boosting --> LightGBM
+    Boosting --> CatBoost
+
+    Voting --> VotingClassifier[Voting Classifier]
+
+    Stacking --> StackingClassifier[Stacking Classifier]
+```
+# 7. Real-World Applications
+
+Ensemble models are widely adopted across industries because they provide high predictive accuracy, robustness, and scalability. They are particularly effective when working with structured data, where they often outperform individual Machine Learning models.
+
+The following examples illustrate some of the most common real-world applications of ensemble methods.
+
+## Fraud Detection
+
+Financial institutions use ensemble algorithms to detect fraudulent transactions by analyzing customer behavior, transaction history, spending patterns, and unusual activities in real time. Boosting algorithms such as XGBoost are especially effective because they can identify complex nonlinear relationships while maintaining high predictive accuracy.
+
+## Customer Churn Prediction
+
+Telecommunications companies, subscription services, and online platforms use ensemble models to predict which customers are likely to cancel their subscriptions. These predictions allow businesses to launch targeted retention campaigns before customers leave.
+
+Typical input variables include:
+
+- Purchase history
+- Customer engagement
+- Service usage
+- Support interactions
+- Demographic information
+
+## Recommendation Systems
+
+Recommendation engines benefit from ensemble techniques by combining different predictive models to improve personalization. These systems analyze user preferences, browsing behavior, and historical interactions to recommend products, movies, music, or other content.
+
+## Marketing Analytics
+
+Marketing teams frequently apply ensemble algorithms to improve decision-making through predictive analytics. Common applications include:
+
+- Customer segmentation
+- Click-through rate prediction
+- Campaign response prediction
+- Lead scoring
+- Customer lifetime value estimation
+- Purchase propensity prediction
+
+These models enable organizations to allocate marketing budgets more efficiently and deliver personalized customer experiences.
+
+## Demand Forecasting
+
+Retailers, manufacturers, and logistics companies use ensemble models to forecast product demand by combining historical sales data with seasonal patterns, promotions, pricing information, and external factors. Accurate demand forecasting helps optimize inventory management and supply chain operations.
+
+## Industry Example: Uber and XGBoost
+
+Uber has publicly documented the use of **XGBoost** within its Michelangelo Machine Learning platform for several prediction tasks involving structured data. According to Uber Engineering, XGBoost has been applied to problems such as demand forecasting, estimated time of arrival (ETA) prediction, recommendation systems, and fraud detection due to its scalability and predictive performance.
+
+## Industry Example: Netflix Prize
+
+The winning solution of the **Netflix Prize** competition combined hundreds of predictive models using ensemble learning techniques. Although Netflix later reported that the complete competition ensemble was not deployed in production because of its computational complexity, the competition demonstrated the remarkable predictive power of ensemble methods and significantly influenced subsequent research in recommender systems.
+
+# 8. Conclusion
+
+Ensemble models have become a fundamental component of modern supervised Machine Learning because they consistently achieve higher predictive performance than individual models. By combining multiple learners, these techniques improve accuracy, increase robustness, and enhance a model's ability to generalize to unseen data.
+
+Throughout this document, the three principal ensemble strategies—**Bagging**, **Boosting**, and **Stacking**—have been examined, highlighting their differences, strengths, and practical applications. While Bagging primarily reduces variance, Boosting focuses on minimizing bias, and Stacking combines the strengths of diverse algorithms through a meta-learner. Each approach addresses different predictive challenges and offers unique advantages depending on the problem being solved.
+
+The analysis of AdaBoost, Gradient Boosting, XGBoost, LightGBM, CatBoost, Voting Classifier, and Stacking Classifier demonstrates that ensemble methods provide a versatile toolkit capable of handling a wide variety of supervised learning tasks. Their widespread adoption in areas such as fraud detection, customer analytics, demand forecasting, recommendation systems, and marketing demonstrates their practical value across multiple industries.
+
+As Machine Learning continues to evolve, ensemble methods remain among the most effective techniques for structured data analysis. Their balance of predictive accuracy, flexibility, and scalability ensures they will continue to play a central role in both academic research and real-world Artificial Intelligence applications.
+
+# 9. References
+
+Breiman, L. (1996). *Bagging predictors*. Machine Learning, 24(2), 123–140. https://doi.org/10.1007/BF00058655
+
+Breiman, L. (2001). *Random Forests*. Machine Learning, 45(1), 5–32. https://doi.org/10.1023/A:1010933404324
+
+Chen, T., & Guestrin, C. (2016). *XGBoost: A scalable tree boosting system*. Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD '16), 785–794. https://doi.org/10.1145/2939672.2939785
+
+Dietterich, T. G. (2000). *Ensemble methods in machine learning*. In J. Kittler & F. Roli (Eds.), Multiple Classifier Systems (Lecture Notes in Computer Science, Vol. 1857, pp. 1–15). Springer. https://doi.org/10.1007/3-540-45014-9_1
+
+Freund, Y., & Schapire, R. E. (1997). *A decision-theoretic generalization of on-line learning and an application to boosting*. Journal of Computer and System Sciences, 55(1), 119–139. https://doi.org/10.1006/jcss.1997.1504
+
+Friedman, J. H. (2001). *Greedy function approximation: A gradient boosting machine*. Annals of Statistics, 29(5), 1189–1232. https://doi.org/10.1214/aos/1013203451
+
+Ke, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q., & Liu, T.-Y. (2017). *LightGBM: A highly efficient gradient boosting decision tree*. Advances in Neural Information Processing Systems, 30. https://proceedings.neurips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html
+
+Mienye, I. D., & Sun, Y. (2022). *A survey of ensemble learning: Concepts, algorithms, applications, and prospects*. IEEE Access, 10, 99129–99149. https://doi.org/10.1109/ACCESS.2022.3207287
+
+Prokhorenkova, L., Gusev, G., Vorobev, A., Dorogush, A. V., & Gulin, A. (2018). *CatBoost: Unbiased boosting with categorical features*. Advances in Neural Information Processing Systems, 31. https://proceedings.neurips.cc/paper/2018/hash/14491b756b3a51daac41c24863285549-Abstract.html
+
+Sagi, O., & Rokach, L. (2018). *Ensemble learning: A survey*. Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery, 8(4), e1249. https://doi.org/10.1002/widm.1249
+
+Scikit-learn Developers. (2025). *Ensemble methods*. Scikit-learn Documentation. https://scikit-learn.org/stable/modules/ensemble.html
+
+Uber Engineering. (2018). *Introducing Michelangelo: Uber's Machine Learning Platform*. https://www.uber.com/blog/michelangelo-machine-learning-platform/
+
+Wolpert, D. H. (1992). *Stacked generalization*. Neural Networks, 5(2), 241–259. https://doi.org/10.1016/S0893-6080(05)80023-1
+
+---
+
+# Author
+
+**Gabriela Granja**
+
+AI Bootcamp F5  
+Factoría F5  
+July 2026
+
+GitHub: https://github.com/gabrielagranja
